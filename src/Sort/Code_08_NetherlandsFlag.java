@@ -4,20 +4,20 @@ package Sort;
  * Created by zhaoxinliu on 2019/3/20
  */
 public class Code_08_NetherlandsFlag {
-    public  static int[] partition(int[] array, int left, int right, int num) {
-        int less = left -1;
+    public static int[] partition(int[] array, int left, int right, int num) {
+        int less = left - 1;
         int more = right + 1;
         int cur = left;
-        while(cur < more){
-            if(array[cur] < num){//只要num大于当前数字，就将当前数字与arr[++less]交换，cur++
-                swap(array,++less,cur++);
-            }else if(array[cur]  > num){//如果当前数字大于num,则当前数字与array[--more]交换，cur是不用++的。
-                swap(array,--more,cur);
-            }else{
+        while (cur < more) {
+            if (array[cur] < num) {//只要num大于当前数字，就将当前数字与arr[++less]交换，cur++
+                swap(array, ++less, cur++);
+            } else if (array[cur] > num) {//如果当前数字大于num,则当前数字与array[--more]交换，cur是不用++的。
+                swap(array, --more, cur);
+            } else {
                 cur++;//如果相等的话，cur直接++
             }
         }
-        return new int[]{++less,--more};
+        return new int[]{less + 1, more - 1};
     }
 
     // for test
