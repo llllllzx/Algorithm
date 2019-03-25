@@ -15,7 +15,7 @@ public class Code_06_SmallSum {
 		if(l == r){
 			return 0;
 		}
-			int middle = l + ((r - l) >> 1);
+		int middle = l + ((r - l) >> 1);
 		return  mergeSort(arr, l, middle) + mergeSort(arr, middle + 1, r) + merge(arr, l, middle, r);
 	}
 
