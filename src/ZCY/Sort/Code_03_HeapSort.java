@@ -1,36 +1,54 @@
-package Sort;
+package ZCY.Sort;
 
 import java.util.Arrays;
 
-public class Code_07_BucketSort {
+public class Code_03_HeapSort {
 
-    // only for 0~200 value
-    public static void bucketSort(int[] arr) {
+    public static void heapSort(int[] arr) {
         if (arr == null || arr.length < 2) {
             return;
         }
-        //寻找数组中的最大值。
-        int max = Integer.MIN_VALUE;
+        //初始化大根堆
         for (int i = 0; i < arr.length; i++) {
-            max = Math.max(max, arr[i]);
+            headpInsert(arr, i);
         }
-        //申请max+1个桶
-        int[] buckets = new int[max + 1];
-        //遍历数组，使用桶来记录数字的频率
-        //例如：如果6出现了三次，则buckets[6] = 3;
-        for (int i = 0; i < arr.length; i++) {
-            buckets[arr[i]]++;
-        }
+        //大根堆初试化以后，将完全二叉树的最后一个叶子节点与二叉树的根节点进行交换。
+        int size = arr.length;
+        swap(arr, 0, --size);
 
-        //遍历桶
-        int j = 0;
-        for (int i = 0; i < buckets.length; i++) {
-            while (buckets[i]-- > 0) {
-                arr[j++] = i;//arr数组一定不会越界哦。
-            }
+        while (size > 0) {
+            heapify(arr, 0, size);
+            swap(arr, 0, --size);
         }
     }
 
+    public static void heapify(int[] arr, int index, int size) {
+        int left = index * 2 + 1;
+        while (left < size) {
+            int larger = left + 1 < size && arr[left + 1] > arr[left] ? left + 1 : left;
+            larger = arr[larger] > arr[index] ? larger : index;
+            if (larger == index) {
+                break;
+            }
+            swap(arr, index, larger);
+            index = larger;
+            left = index * 2 + 1;
+        }
+    }
+
+    public static void headpInsert(int[] arr, int index) {
+        //(index-1)/2是为了找到index节点的根节点。
+        while (arr[index] > arr[(index - 1) / 2]) {
+            swap(arr, index, (index - 1) / 2);
+            index = (index - 1) / 2;
+        }
+    }
+
+    public static void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
 
     // for test
     public static void comparator(int[] arr) {
@@ -41,7 +59,7 @@ public class Code_07_BucketSort {
     public static int[] generateRandomArray(int maxSize, int maxValue) {
         int[] arr = new int[(int) ((maxSize + 1) * Math.random())];
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = (int) ((maxValue + 1) * Math.random());
+            arr[i] = (int) ((maxValue + 1) * Math.random()) - (int) (maxValue * Math.random());
         }
         return arr;
     }
@@ -92,17 +110,15 @@ public class Code_07_BucketSort {
     public static void main(String[] args) {
         int testTime = 500000;
         int maxSize = 100;
-        int maxValue = 150;
+        int maxValue = 100;
         boolean succeed = true;
         for (int i = 0; i < testTime; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = copyArray(arr1);
-            bucketSort(arr1);
+            heapSort(arr1);
             comparator(arr2);
             if (!isEqual(arr1, arr2)) {
                 succeed = false;
-                printArray(arr1);
-                printArray(arr2);
                 break;
             }
         }
@@ -110,9 +126,8 @@ public class Code_07_BucketSort {
 
         int[] arr = generateRandomArray(maxSize, maxValue);
         printArray(arr);
-        bucketSort(arr);
+        heapSort(arr);
         printArray(arr);
-
     }
 
 }
