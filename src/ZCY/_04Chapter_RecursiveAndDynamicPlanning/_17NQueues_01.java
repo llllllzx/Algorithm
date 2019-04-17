@@ -26,7 +26,6 @@ public class _17NQueues_01 {
         List<List<String>> lists = obj.solveNQueens(8);
         System.out.println(lists.size());
         System.out.println(lists);
-
     }
 
     public List<List<String>> solveNQueens(int n) {

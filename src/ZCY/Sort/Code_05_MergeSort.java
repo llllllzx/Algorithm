@@ -16,9 +16,9 @@ public class Code_05_MergeSort {
 			return;
 		}
 		int mid = l + ((r - l) >> 1);
-		mergeSort(arr, l, mid);
-		mergeSort(arr, mid + 1, r);
-		merge(arr, l, mid, r);
+		mergeSort(arr, l, mid);//对左半部分进行归并排序
+		mergeSort(arr, mid + 1, r);//对右半部分进行归并排序
+		merge(arr, l, mid, r);//将左半部分和右半部分进行merge
 	}
 
 	public static void merge(int[] arr, int l, int m, int r) {

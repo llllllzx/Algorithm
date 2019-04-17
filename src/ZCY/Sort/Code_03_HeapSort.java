@@ -36,6 +36,7 @@ public class Code_03_HeapSort {
         }
     }
 
+
     public static void headpInsert(int[] arr, int index) {
         //(index-1)/2是为了找到index节点的根节点。
         while (arr[index] > arr[(index - 1) / 2]) {

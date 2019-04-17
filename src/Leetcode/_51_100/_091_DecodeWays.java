@@ -1,0 +1,22 @@
+package Leetcode._51_100;
+
+public class _091_DecodeWays {
+	public static void main(String[] args) {
+		int res = new _091_DecodeWays().numDecodings("226");
+		System.out.println(res);
+	}
+
+	public int numDecodings(String s) {
+		if (s.isEmpty() || s.length() > 1 && s.charAt(0) == '0')
+			return 0;
+		int[] dp = new int[s.length() + 1];
+		dp[0] = 1;
+		for (int i = 1; i < dp.length; i++) {
+			dp[i] = (s.charAt(i - 1) == '0') ? 0 : dp[i - 1];
+			if (i > 1 && (s.charAt(i - 2) == '1' || (s.charAt(i - 2) == '2' && s.charAt(i - 1) <= '6'))) {
+				dp[i] += dp[i - 2];
+			}
+		}
+		return dp[s.length()];
+	}
+}
